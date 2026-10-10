@@ -62,6 +62,12 @@ Posts cannot be deleted through the Postiz tools - if the user wants to delete a
                 .describe('The post id'),
               publishDate: z.string().describe('UTC time'),
               state: z.string().describe('QUEUE, DRAFT, PUBLISHED or ERROR'),
+              error: z
+                .string()
+                .nullable()
+                .describe(
+                  'Curated failure message for errored posts, null otherwise'
+                ),
               content: z.string(),
               settings: z
                 .any()
@@ -94,6 +100,7 @@ Posts cannot be deleted through the Postiz tools - if the user wants to delete a
                 .utc()
                 .format('YYYY-MM-DDTHH:mm:ss'),
               state: p.state,
+              error: p.error ?? null,
               content: p.content || '',
               settings: parseSettings(p.settings),
               group: p.group,
